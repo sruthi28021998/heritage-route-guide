@@ -1,0 +1,4 @@
+.ok-banner { background: #e6f4ea; border: 1px solid #1b7a3a; }
+.filefield { display: flex; flex-direction: column; gap: .3rem; }
+.qrbox { display: flex; flex-direction: column; align-items: center; gap: .2rem; }
+.stars { margin: .3rem 0; }

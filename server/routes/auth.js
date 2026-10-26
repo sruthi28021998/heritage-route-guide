@@ -11,6 +11,8 @@ router.post('/register', async (req, res) => {
   try {
     const { name, email, password, language } = req.body;
     if (!name || !email || !password) return res.status(400).json({ message: 'All fields required' });
+    if (!/^\S+@\S+\.\S+$/.test(email)) return res.status(400).json({ message: 'Invalid email' });
+    if (password.length < 6) return res.status(400).json({ message: 'Password must be at least 6 characters' });
     if (await User.findOne({ email })) return res.status(400).json({ message: 'Email already used' });
     const user = await User.create({ name, email, language, password: await bcrypt.hash(password, 10) });
     res.status(201).json({ token: sign(user._id), user: out(user) });

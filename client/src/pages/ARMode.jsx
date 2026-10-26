@@ -39,18 +39,23 @@ export default function ARMode() {
   }, [mode, id]);
 
   // QR mode: scanner
-  useEffect(() => {
-    if (mode !== 'qr') return;
-    const scanner = new Html5Qrcode('qr-reader');
-    scanner.start({ facingMode: 'environment' }, { fps: 10, qrbox: 250 }, async (text) => {
-      try {
-        const { data } = await api.get(`/landmarks/qr/${encodeURIComponent(text)}`);
-        await scanner.stop();
-        nav(`/ar/${data._id}`);
-      } catch { setErr('QR code not recognized'); }
-    }).catch(() => setErr('Camera access denied or unavailable'));
-    return () => { scanner.isScanning && scanner.stop().catch(() => {}); };
-  }, [mode, nav]);
+    useEffect(() => {
+    if (!id) return setL(null);
+    let routeId = null;
+    start.current = Date.now();
+    api.get(`/landmarks/${id}`).then((r) => {
+      setL(r.data);
+      routeId = r.data.route;
+      api.post(`/landmarks/${id}/visit`).catch(() => {});
+      api.post('/analytics/track', { sessionId: sessionStorage.getItem('sid') || 'anon', landmark: id, route: routeId, type: 'ar' }).catch(() => {});
+    });
+    return () => {
+      api.post('/analytics/track', {
+        sessionId: sessionStorage.getItem('sid') || 'anon', landmark: id, route: routeId, type: 'ar',
+        duration: Math.round((Date.now() - start.current) / 1000),
+      }).catch(() => {});
+    };
+  }, [id]);
 
   const lang = user.language;
 

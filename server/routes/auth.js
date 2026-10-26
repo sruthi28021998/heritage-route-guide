@@ -42,5 +42,8 @@ router.post('/favorites/:id', protect, async (req, res) => {
   await req.user.save();
   res.json(out(req.user));
 });
-
+router.get('/journey', protect, async (req, res) => {
+  const u = await User.findById(req.user._id).populate('visited favorites', 'name route images');
+  res.json({ visited: u.visited, favorites: u.favorites });
+});
 module.exports = router;

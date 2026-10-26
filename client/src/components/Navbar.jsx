@@ -11,6 +11,7 @@ export default function Navbar() {
         {user ? (
           <>
             <Link to="/ar">Scan QR</Link>
+            <Link to="/journey">My Journey</Link>
             {user.role === 'admin' && <Link to="/admin">Admin</Link>}
             <select value={user.language} onChange={(e) => setLanguage(e.target.value)}>
               <option value="en">English</option>

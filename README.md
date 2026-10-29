@@ -2,7 +2,7 @@
 
 Web-based interactive guide for heritage routes with AR-style storytelling, QR scanning, GPS-triggered content, multimedia and multilingual (English/Hindi) narratives.
 
-**Live:** <your-vercel-link>  |  **API:** <your-render-link>
+**Live:** https://heritage-route-guide-three.vercel.app |  **API:** https://heritage-route-guide-iq0w.onrender.com
 
 ## Features
 - Register/login (JWT), role-based access (user/admin)

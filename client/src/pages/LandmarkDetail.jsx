@@ -42,7 +42,7 @@ export default function LandmarkDetail() {
     <div className="card">
       <Link to={`/map/${l.route}`}>← Back to map</Link>
       <h2>{l.name} <button className="ghost" onClick={() => toggleFav(l._id)}>{fav ? '❤️' : '🤍'}</button></h2>
-      {l.images?.[0] && <img className="hero" src={l.images[0]} alt={l.name} />}
+      {l.images?.[0] && <img className="hero" src={l.images[0]} alt={l.name} onError={(e) => { e.target.style.display = 'none'; }} />}
       <p>{l.description?.[lang] || l.description?.en}</p>
 
       {l.audioUrl?.[lang] && <audio controls src={l.audioUrl[lang]} />}
